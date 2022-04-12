@@ -11,8 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <!-- JavaScript Bundle with Popper -->
@@ -32,7 +33,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
-
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
     <title>documents</title>
 </head>
@@ -41,10 +43,12 @@
 
     <%- include('common/nav') %>
     <div  style="padding: 1rem; position: absolute;top:.1rem;right:.5rem">
-      <h5 style="color: rgb(78, 72, 72)"><%= user.email %></h5>
+      
+<!-- <i class='fas fa-user-alt' style='font-size:24px'></i> -->
+      <!-- <h5 style="color: rgb(78, 72, 72)"><%= user.email %></h5> -->
     </div>
-        <div  style="height: 100%; " class=" d-flex justify-content-between">
-            <div id="index" style="height: 91vh;align-items: center;padding: 2rem; background-color: rgba(141, 136, 136, 0.541);border-top: 1px dotted rgba(0, 0, 0, 0.507);;overflow-y: auto;"
+        <div  style="height: 94%; " class=" d-flex justify-content-between">
+            <div id="index" style="height: 87vh;align-items: center;padding: 2rem; background-color: rgba(141, 136, 136, 0.541);border-top: 1px dotted rgba(0, 0, 0, 0.507);;overflow-y: auto;"
                 class="col-2">
 
                 <ul> <% if ( user.login == true  ) { %> 
@@ -70,7 +74,7 @@
 
             </div>
             
-            <div style="height: 91vh;background-color: white; overflow-y: auto; padding-top: 4rem;" class="col">
+            <div style="height: 87vh;background-color: white; overflow-y: auto; padding-top: 4rem;" class="col">
              
                 <div
                    style="border: 2px solid grey;padding: 10px; height: 70vh;width: 90%;margin-left: auto;margin-right: auto; overflow-y: auto;text-align: center;">
@@ -84,9 +88,23 @@
                         
 
                         <div class="card" style="width: 100%; background-color: rgba(165, 159, 159, 0.445);">
-                            <h6 style="text-decoration: underline;"><%= item.name %></h6>
+                       <div style="padding:.5rem" class="d-flex justify-content-between "> 
+                        <span style="color:rgba(165, 159, 159, 0.445);" class="material-icons">
+                          edit_note
+                          </span>
+                       
+                            <h6 style="font-family: 'Merriweather', serif;">   <%= item.name %> </h6>
+                            <a href='/deletedoc?docid=<%= item.doc_id %>'><span style="color:red;" class="material-icons">
+                              delete_forever
+                              </span></a>
+                             </div>
+                           
+                           
+                          
                             <div class="card-body">
-                             <p><%= item.remark %></p>
+                              <p class="text-muted">
+                              <%= item.remark %>
+                              </p>
                               <p class="card-text">
                                 <a href='/fetchdoc?pathname=<%= item.path %>'>Click here</a>
                                 </p>
@@ -111,8 +129,9 @@
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
+      
+      <div style="background-color: rgba(196, 186, 186, 0.541);"  class="modal-content">
+        <div style="background-color: rgba(154, 207, 185, 0.637);" class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add New Document</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -136,7 +155,7 @@
                 
 
                
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button style="background-color: rgba(20, 20, 20, 0.849);color: aliceblue;" type="submit" class="btn btn-sm">Submit</button>
               </form>
         </div>
        
