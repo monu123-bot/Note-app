@@ -6,3 +6,5 @@ I will add messaging feature in this application to make it more user friendly.
 
 
 <a href="https://note--plus.herokuapp.com/">Open</a>
+
+Currently this is not working because it's not connected to my database----> i will fix this issue asap.
