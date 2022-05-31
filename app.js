@@ -11,8 +11,8 @@ let transporter = nodemailer.createTransport({
   secure: false, // true for 465, false for other ports
   requireTLS: true,
   auth: {
-    user: "monudixit0007@gmail.com", // generated ethereal user
-    pass: "837784046400000", // generated ethereal password
+    user: "Your email", // generated ethereal user
+    pass: "Your email password", // generated ethereal password
   },
 });
 async function mail(email, link) {
