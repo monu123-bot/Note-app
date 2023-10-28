@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const express = require("express");
 const con = require("./config");
@@ -40,7 +41,7 @@ const pathname = path.join(__dirname, "views");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 7000;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -310,7 +311,7 @@ app.get("/home", (req, res) => {
                 }
               );
             } else {
-              console.log("failed");
+              console.log("failed",err);
             }
           });
         } else {
@@ -335,8 +336,33 @@ app.get("/home", (req, res) => {
     });
   }
 });
-app.get("/secreat", auth, (req, res) => {
-  res.render(`secreat`);
+app.get("/shared", auth, (req, res) => {
+   
+  if(req.session.user!=null){
+
+  
+  con.query(`select * from users u,shareddoc s,doc d where ( s.user_id = u.cust_id or s.owner_id = u.cust_id ) and d.doc_id = s.doc_id ;`, (err, result, next) => {
+    if (!err) {
+      var sharedlist = result;
+
+      const data = {
+        user:req.session.user,
+        userid:req.session.userid,
+        sharedlist: sharedlist,
+      };
+      res.render("shared", { data });
+    } else {
+      console.log("failed");
+    }
+  });
+
+}
+else{
+  res.redirect('/')
+}
+
+
+  
 });
 app.get("/", (req, res) => {
   res.render(`login`);
@@ -385,22 +411,47 @@ app.get("/documents", async (req, res) => {
     `select * from doc,cust_doc,users where doc.doc_id = cust_doc.doc_id and cust_doc.cust_id = users.cust_id and users.email  = '${req.session.user}' `,
     (err, result, next) => {
       if (!err) {
+        const docs = result
         if (req.session.user != null) {
-          const user = {
-            email: req.session.user,
-            name: req.session.username,
-            docs: result,
-            message: "Please add some docs",
-            login: true,
-          };
-          res.render("documments", { user });
-        } else {
+         
+
+
+          con.query(
+            `select * from connections,users where connections.user1  = '${req.session.userid}' and users.cust_id = connections.user2 `,
+            (err, result, next) => {
+              if (!err) {
+                let connection= result
+                const user = {
+                  id:req.session.userid,
+                  email: req.session.user,
+                  name: req.session.username,
+                  docs: docs,
+                  message: "Please add some docs",
+                  login: true,
+                  connection:connection
+                };
+                   
+                
+                res.render("documments", { user });
+
+              }
+            else{
+              res.send(err)
+            }})
+
+
+
+          // res.render("documments", { user });
+        } 
+        else {
           const user = {
             email: "You are not logged in",
             message: "Login again..",
             docs: [],
             login: false,
           };
+
+
           res.render("documments", { user });
         }
       } else {
@@ -459,7 +510,7 @@ app.post("/registration", async (req, res) => {
                       ];
 
                       con.query(
-                        "INSERT INTO users set cust_id =  ?, fName = ?, lName = ?, phno = ?, email = ?, dob = ?, city = ? , state = ? , locality = ? , street = ? , password = ? , token = ? ",
+                        "INSERT INTO users set cust_id =  ?, fName = ?, lName = ?, phno = ?, email = ?, dob = ?, city = ? , state = ? , locality = ? , street = ? , password = ? , token = ? , image='' ",
                         data,
                         (err, result, feilds) => {
                           if (!err) {
@@ -511,7 +562,7 @@ app.post("/registration", async (req, res) => {
         ];
 
         con.query(
-          "INSERT INTO users set cust_id =  ?, fName = ?, lName = ?, phno = ?, email = ?, dob = ?, city = ? , state = ? , locality = ? , street = ? , password = ? , token = ? ",
+          "INSERT INTO users set cust_id =  ?, fName = ?, lName = ?, phno = ?, email = ?, dob = ?, city = ? , state = ? , locality = ? , street = ? , password = ? , token = ? , image = ''   ",
           data,
           (err, result, feilds) => {
             if (!err) {
@@ -530,7 +581,7 @@ app.post("/registration", async (req, res) => {
   });
 });
 app.post("/adddoc", upload.single("document"), async (req, res) => {
-  console.log(req.file.path);
+  // console.log(req.file.path);
 
   let dob = new Date();
   let date = dob.getDate();
@@ -720,25 +771,34 @@ app.post("/login", async (req, res) => {
 
   con.query("select * from users", (err, result) => {
     if (!err) {
+      let temppass = ""
+      let email = req.body.email
+      let pass = req.body.password
       result.forEach((item) => {
-        // const passwordmatch = bcrypt.compare(item.password,req.body.password)
-        if (item.email == req.body.email || item.token == token) {
-          console.log(item);
+        console.log(item.email,email)
+        if(item.email==email){
+          console.log("email matched")
+        }
+        if (item.token==token){
+          console.log("token matched")
+        }
+        if (item.email == email || item.token == token) {
+          console.log("matched");
           temppass = item.password;
           temptoken = item.token;
           req.session.login = true;
           req.session.username = item.fName;
-
           req.session.userid = item.cust_id;
         }
-      });
-      const passwordmatch = bcrypt.compareSync(req.body.password, temppass);
 
+      });
+      const passwordmatch = bcrypt.compareSync(pass, temppass);
+      console.log('pass match passed',passwordmatch)
       if (passwordmatch == true || temptoken == token) {
         req.session.user = req.body.email;
 
         const user = { email: req.session.user };
-
+        console.log('home')
         res.redirect("/home");
       } else {
         res.render("login");
@@ -767,7 +827,7 @@ app.get("/deletenote", (req, res) => {
   );
 });
 app.get("/deletedoc", (req, res) => {
-  console.log(req.query.docid);
+  // console.log(req.query.docid);
   con.query(
     `delete from doc where doc_id = '${req.query.docid}' `,
     (err, result) => {
@@ -825,7 +885,7 @@ app.post(
   profileimageupload.single("profileimage"),
   (req, res) => {
     const id = req.query.custid;
-    console.log(req.file);
+    // console.log(req.file);
 
     con.query(
       `update users set image =  '${req.file.filename}' where cust_id = '${id}' `,
@@ -921,7 +981,7 @@ app.post("/reset-password/:id/:token", (req, res) => {
   );
 });
 app.get("/requestaccept", (req, res) => {
-  console.log(req.query);
+  // console.log(req.query);
   con.query(
     `insert into connections set user1 = '${req.query.sender}' , user2 = '${req.query.reciever}' `,
 
@@ -954,6 +1014,40 @@ app.get("/requestaccept", (req, res) => {
     }
   );
 });
+
+app.post('/sharedoc',  (req,res)=>{
+  console.log(req.body)
+  let time = Date.now()
+  let iserr = false
+  let er = null
+  for (let i =0;i<req.body.list.length;i++){
+  console.log('inside list')
+  
+  con.query(
+    `insert into shareddoc set user_id = ${Number(req.body.list[i])},   doc_id =   ${Number(req.body.document_id)} , owner_id =   ${Number(req.body.owner)}  `,
+
+    (err, result, feilds) => {
+      console.log(err,result)
+      if (err) {
+        iserr = true
+        er = err
+        
+      } 
+    }
+  )
+  }
+  if (iserr===true){
+    console.log('there is an error',er)
+    res.send({message:'error'})
+  }
+  else{
+    console.log('no error')
+    res.redirect('/documents')
+  }
+  
+})
+
 app.listen(port, () => {
   console.log(`app is running on port : ${port}`);
 });
+

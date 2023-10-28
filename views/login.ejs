@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <title>home</title>
+</head>
+
+<body >
+  
+  
+<div style="text-align: center; width: fit-content;margin-left: auto;margin-right: auto;padding: 1rem;margin-top: 20vh;">
+  <br><br>
+
+      <form style="max-width: 400px;min-width: 250px;" action="/login" method="post">
+        <div class="mb-3">
+          
+          <input name="email"  type="email" style="border-radius: 6px;" class="form-control inp" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+          
+        </div><br>
+        <div class="mb-3">
+          
+          <input name="password" style="border-radius: 6px;" type="password" class="form-control inp" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <a href="/forgot-password">forgot password</a><br>
+        <!-- <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div> --><br>
+        <button id="button" type="submit" class="disabled">Login</button>
+      </form>
+    
+    </div>
+    <div class="d-flex align-items-center justify-content-center">
+            <a style="color: white;" href="/signin">Sign up</a>
+    </div>
+   
+</body>
+<style>
+    .disabled{
+        display: none;
+    }
+    /* From cssbuttons.io by @meermubashar */
+button {
+ width: 140px;
+ height: 45px;
+ font-size: 23px;
+ cursor: pointer;
+ outline: none;
+ background: transparent;
+ color: white;
+ font-family: 'Times New Roman', Times, serif;
+ font-weight: 700;
+ border: none;
+ position: relative;
+ transition: all 0.5s;
+ z-index: 1;
+}
+
+button::before {
+ content: "";
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 5px;
+ height: 100%;
+ background-color: white;
+ z-index: -1;
+ transition: all 0.5s;
+}
+
+button:hover::before {
+ width: 100%;
+ border-radius: 12px;
+}
+
+button:hover {
+ color: black;
+}
+
+button:active:before {
+ background: #b9b9b9;
+}
+    .inp{
+        -webkit-box-shadow: 1px -1px 33px 2px rgba(0,0,0,0.57);
+-moz-box-shadow: 1px -1px 33px 2px rgba(0,0,0,0.57);
+box-shadow: 1px -1px 33px 2px rgba(0,0,0,0.57);
+    }
+    body{
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='650' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1717%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='url(%23SvgjsLinearGradient1718)'%3e%3c/rect%3e%3cpath d='M992.37 547.45 a94.3 94.3 0 1 0 188.6 0 a94.3 94.3 0 1 0 -188.6 0z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M991.586%2c144.202C1032.502%2c147.144%2c1079.881%2c146.442%2c1101.716%2c111.714C1124.407%2c75.626%2c1109.724%2c29.073%2c1086.417%2c-6.62C1065.447%2c-38.735%2c1029.938%2c-56.489%2c991.586%2c-56.946C952.335%2c-57.413%2c911.802%2c-43.253%2c892.762%2c-8.926C874.158%2c24.615%2c885.051%2c65.403%2c905.849%2c97.63C924.751%2c126.918%2c956.818%2c141.702%2c991.586%2c144.202' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M6.14 443.17 a115.05 115.05 0 1 0 230.1 0 a115.05 115.05 0 1 0 -230.1 0z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M957.144%2c169.431C985.933%2c168.908%2c1010.988%2c152.76%2c1026.619%2c128.578C1043.961%2c101.748%2c1056.238%2c68.14%2c1040.635%2c40.263C1024.783%2c11.941%2c989.476%2c1.6%2c957.144%2c4.45C929.287%2c6.906%2c909.872%2c28.883%2c895.772%2c53.033C881.513%2c77.457%2c869.962%2c106.167%2c883.153%2c131.185C897.032%2c157.507%2c927.392%2c169.972%2c957.144%2c169.431' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M587.9470813070403 514.7310555353008L567.9314459241274 453.12926403120724 485.53657635944364 513.9536128576234z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M547.54 418.65 a147.8 147.8 0 1 0 295.6 0 a147.8 147.8 0 1 0 -295.6 0z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M972.5341422004817 295.02357366862725L931.4061754805001 421.6024397602063 1057.9850415720791 462.7304064801879 1099.1130082920608 336.15154038860885z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M913.95 235.03 a175.35 175.35 0 1 0 350.7 0 a175.35 175.35 0 1 0 -350.7 0z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M588.3373415995915 111.06905763370398L658.547631922019 255.0214856001752 802.5000598884903 184.81119527774757 732.2897695660627 40.85876731127635z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1717'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='15.28%25' y1='139.29%25' x2='84.72%25' y2='-39.29%25' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1718'%3e%3cstop stop-color='%230e2a47' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(39%2c 84%2c 110%2c 1)' offset='0.78'%3e%3c/stop%3e%3c/linearGradient%3e%3cstyle%3e %40keyframes float1 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-10px%2c 0)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float1 %7b animation: float1 5s infinite%3b %7d %40keyframes float2 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-5px%2c -5px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float2 %7b animation: float2 4s infinite%3b %7d %40keyframes float3 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(0%2c -10px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float3 %7b animation: float3 6s infinite%3b %7d %3c/style%3e%3c/defs%3e%3c/svg%3e");
+    }
+</style>
+<script>
+//     setInterval(myTimer, 1000);
+
+// function myTimer() {
+//     let email = document.getElementById('exampleInputEmail1').value
+//     let password = document.getElementById('exampleInputPassword1').value
+//     console.log(email,password)
+// }
+let button = document.getElementById('button')
+setInterval(()=>{
+    let password = document.getElementById('exampleInputPassword1').value
+    let email = document.getElementById('exampleInputEmail1').value
+    
+    
+    if (email != '' && password != ''){
+        button.classList.remove('disabled')
+    }
+    else{
+        button.classList.add('disabled')
+    }
+    
+},100)
+    
+</script>
+</html>
