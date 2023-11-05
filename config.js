@@ -18,13 +18,13 @@
 
 
 const mysql = require('mysql')
-
 const con = mysql.createConnection({
-    host:'b0bchu0skvkkuxiwpn8x-mysql.services.clever-cloud.com',
-    user:'udjvkr10jph9rvw0',
-    database:'b0bchu0skvkkuxiwpn8x',
-    password:'J8wBuMMHGbZuxxVeHqcj'
+    host:process.env.DATABASEHOSTNAME,
+    user:process.env.DATABASEUSER,
+    database:process.env.DATABASENAME,
+    password:process.env.DATABASEPASSWORD
 })
+
 con.connect((err)=>{
     if(err){
         console.log(err)

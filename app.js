@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 const express = require("express");
 const con = require("./config");
@@ -16,6 +15,81 @@ let transporter = nodemailer.createTransport({
     pass: "Your email password", // generated ethereal password
   },
 });
+
+
+// aws start
+
+// const {S3Client,PutObjectCommand} = require('@aws-sdk/client-s3')
+// const {getSignedUrl} = require('@aws-sdk/s3-request-presigner')
+
+
+// // const AWS = require("aws-sdk");
+// const { v4: uuid } = require("uuid");
+// const { ensureAuth } = require("../middleware/auth");
+// // const { awsAccessKeyID, awsSecretAccessKey } = require("../config/keys");
+
+
+
+// const bucket = new S3Client({
+  
+//   region: "ap-south-1",
+//   credentials:{
+//     accessKeyId: process.env.AWSACCESSKEYID,
+//   secretAccessKey: process.env.AWSSECRETACCESSKEY,
+//   //   accessKeyId: 'AKIATHMZ4BURI3Z4GNMN',
+//   // secretAccessKey: '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',
+//   }
+  
+// });
+
+// const getPresignedUrl = async (fileName,contentType) => {
+
+//   // const fileName = "DP.jpg"
+
+//   const command = new PutObjectCommand({
+//       Bucket:"noteapp1",
+//       Key:fileName,
+//       ContentType:contentType
+//   })
+
+//   const url = await getSignedUrl(bucket,command,{expiresIn:3600})
+//   console.log("presigned url = ",url)
+//   return url
+// }
+
+
+// app.get('/presignedUrl', async(req,res)=>{
+
+//   const filename = req.query.filename.split('.')[0] + '-' + uuid() + '.'+ req.query.contenttype.split('/')[1]
+//   // console.log(filename)
+//   const contenttype = req.query.contenttype
+//   // console.log(filename)
+//   const url= await getPresignedUrl(filename,contenttype)
+//   // console.log(url)
+//   res.send({
+//       url:url,
+
+//       filename:filename
+//   })
+// })
+
+
+// aws end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 async function mail(email, link) {
   let mailinfo = await transporter.sendMail({
     from: "monudixit0007@gmail.com", // sender address
@@ -885,8 +959,19 @@ app.post(
   profileimageupload.single("profileimage"),
   (req, res) => {
     const id = req.query.custid;
-    // console.log(req.file);
+    console.log(req.file);
+    // const fileparts = req.query.filename.split('.')
+    const matches = req.query.filename.match(/\/?([^/]+)\.(\w+)$/);
+    const filename = matches[1]
 
+    const extension = matches[2]
+
+
+    // const fileparts = filename.split('.');
+    // const extension = parts[parts.length - 1];
+    // const filename = req.query.filename.split('.')[0] + '-' + uuid() + '.'+ req.query.contenttype.split('/')[1]
+    // console.log(filename)
+    // const contenttype = req.query.contenttype
     con.query(
       `update users set image =  '${req.file.filename}' where cust_id = '${id}' `,
 
@@ -1046,6 +1131,8 @@ app.post('/sharedoc',  (req,res)=>{
   }
   
 })
+
+
 
 app.listen(port, () => {
   console.log(`app is running on port : ${port}`);
